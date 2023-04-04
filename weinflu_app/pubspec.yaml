@@ -50,3 +50,9 @@ flutter:
   # disponibles de Google y lo mejor es que son visualmente persistentes
   # en iOS y Android, dando así coherencia al producto.
   uses-material-design: true
+  fonts:
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
