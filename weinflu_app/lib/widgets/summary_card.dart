@@ -58,6 +58,7 @@ class SummaryCard extends StatelessWidget {
           margin: const EdgeInsets.only(right: 16),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             CustomMoneyDisplay(
+              padding: const EdgeInsets.only(top: 2, right: 5),
                 amount: amount,
                 amountStyle: Theme.of(context).textTheme.displayMedium!,
                 amountStyleSmall: Theme.of(context).textTheme.displaySmall!),
