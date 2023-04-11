@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:weinflu_app/design/colors.dart';
+import 'package:weinflu_app/widgets/custom_money_display.dart';
 
 enum TypeProductDetailCard { incomes, outcomes }
 
 class ProductDetailCard extends StatelessWidget {
   final String pathToProductImage;
-  final String amount;
+  final double amount;
   final String productName;
   final String currentSells;
   final String percentage;
   final TypeProductDetailCard typeProductDetailCard;
-  final String amountDecimals;
+
   const ProductDetailCard(
       {super.key,
       required this.pathToProductImage,
       required this.amount,
-      required this.amountDecimals,
       required this.productName,
       required this.currentSells,
       required this.percentage,
@@ -94,36 +94,17 @@ class ProductDetailCard extends StatelessWidget {
                           fontSize: 10),
                     ),
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          padding: const EdgeInsets.only(top: 3, right: 4),
-                          child: const Text('\$',
-                              style: TextStyle(
-                                  color: WeinFluColors.brandPrimaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10))),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: amount,
-                                style: const TextStyle(
-                                    color: WeinFluColors.brandPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20)),
-                            TextSpan(
-                                text: ',$amountDecimals',
-                                style: const TextStyle(
-                                    color: WeinFluColors.brandPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  CustomMoneyDisplay(
+                    amount: amount,
+                    amountStyle: const TextStyle(
+                        color: WeinFluColors.brandPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                    amountStyleSmall: const TextStyle(
+                        color: WeinFluColors.brandPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10),
+                  )
                 ],
               ),
             ),
