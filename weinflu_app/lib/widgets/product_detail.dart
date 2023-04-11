@@ -95,6 +95,7 @@ class ProductDetailCard extends StatelessWidget {
                     ),
                   ),
                   CustomMoneyDisplay(
+                    padding: const EdgeInsets.only(top:4, right: 2),
                     amount: amount,
                     amountStyle: const TextStyle(
                         color: WeinFluColors.brandPrimaryColor,
