@@ -26,6 +26,7 @@ dependencies:
     sdk: flutter
   # En caso de necesitar los iconos de iOS puede utilizar cupertino
   cupertino_icons: ^1.0.2
+  intl: ^0.18.0
 # Estas son las dependencias para el ambiente de desarrollo. Es decir
 # en la aplicación final
 # no se verán reflejadas (instaladas) en ambiente productivo
