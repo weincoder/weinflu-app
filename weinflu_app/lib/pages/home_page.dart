@@ -8,7 +8,8 @@ import '../widgets/product_detail.dart';
 import '../widgets/summary_card.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String storeName;
+  const HomePage({super.key, required this.storeName});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -45,9 +46,9 @@ class _HomePageState extends State<HomePage> {
                 bottomLeft: WeinFluRadius.small,
                 bottomRight: WeinFluRadius.small)),
         backgroundColor: WeinFluColors.brandLightColor,
-        title: const Padding(
-            padding: EdgeInsets.fromLTRB(16, 45, 16, 12),
-            child: HomeAppBarTitle()),
+        title:  Padding(
+            padding: const  EdgeInsets.fromLTRB(16, 45, 16, 12),
+            child: HomeAppBarTitle(storeName: widget.storeName,)),
       ),
       body: Column(
         children: [
