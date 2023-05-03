@@ -1,198 +1,281 @@
 import 'package:flutter/material.dart';
+import 'package:weinflu_app/config/app_routes.dart';
 import 'package:weinflu_app/design/colors.dart';
+import 'package:weinflu_app/design/copys.dart';
+import 'package:weinflu_app/design/radius.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LogInPage extends StatefulWidget {
+  const LogInPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LogInPage> createState() => _LogInPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
-  bool isChecked = false;
-  final borderActive =
-      Border.all(color: WeinFluColors.brandPrimaryColor, width: 2);
-  final borderInactive = Border.all(color: Colors.transparent);
-  late Border borderBoxUser;
-  late Border borderBoxPass;
+class _LogInPageState extends State<LogInPage> {
+  final _formLoginKey = GlobalKey<FormState>();
+  var checkBoxState = false;
+  var userInputController = TextEditingController();
+  late String userName;
+  late BoxDecoration userContainerDecoration;
+  late BoxDecoration pswContainerDecoration;
+  final defaultInputBorder = InputBorder.none;
+  final defaultContainerInputDecoration = const BoxDecoration(
+      color: WeinFluColors.brandSecondaryColor,
+      borderRadius: BorderRadius.all(WeinFluRadius.small));
+  final activeContainerInputDecoration = BoxDecoration(
+      color: WeinFluColors.brandSecondaryColor,
+      border: Border.all(color: WeinFluColors.brandPrimaryColor, width: 2),
+      borderRadius: const BorderRadius.all(WeinFluRadius.small));
+  final defaultInputLabelTheme = const TextStyle(
+      fontSize: 13,
+      color: WeinFluColors.brandLigthDarkColor,
+      fontWeight: FontWeight.normal);
   @override
   void initState() {
     super.initState();
-    borderBoxPass = borderInactive;
-    borderBoxUser = borderInactive;
+    userContainerDecoration = defaultContainerInputDecoration;
+    pswContainerDecoration = defaultContainerInputDecoration;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 8),
-        child: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 100, 16, 0),
+          child: Column(children: [
             Text(
-              'Hello',
+              WeinfluCopys.hello,
               style: Theme.of(context).textTheme.labelLarge,
             ),
             Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                margin: const EdgeInsets.only(top: 20),
-                child: Text(
-                  'Lorem ipsum dolor sit amet, consectetuer adipiscing.',
-                  style: Theme.of(context).textTheme.labelMedium,
-                  textAlign: TextAlign.center,
-                )),
+              margin: const EdgeInsets.fromLTRB(16, 21, 16, 59),
+              child: Text(
+                WeinfluCopys.lorem,
+                style: Theme.of(context).textTheme.labelMedium,
+                textAlign: TextAlign.center,
+              ),
+            ),
             Form(
-                key: _formKey,
+                key: _formLoginKey,
                 child: Column(
                   children: [
                     Container(
                       height: 70,
-                      margin: EdgeInsets.fromLTRB(8, 54, 8, 28),
-                      padding: EdgeInsets.only(left: 16),
-                      decoration: BoxDecoration(
-                          border: borderBoxUser,
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: WeinFluColors.brandSecondaryColor),
+                      padding: const EdgeInsets.only(left: 24, bottom: 4),
+                      decoration: userContainerDecoration,
                       child: TextFormField(
-                        onTap: () {
-                          setState(() {
-                            borderBoxUser = borderActive;
-                            borderBoxPass = borderInactive;
-                          });
-                        },
-                        onTapOutside: (event) {
-                          setState(() {
-                            borderBoxUser = borderInactive;
-                          });
-                        },
-                        style: Theme.of(context).textTheme.labelSmall,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese un valor';
-                          }
-                          return null;
-                        },
-                        textAlign: TextAlign.start,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            labelText: 'User Name',
-                            labelStyle: TextStyle(
-                                color: WeinFluColors.brandLigthDarkColor,
-                                fontWeight: FontWeight.w200)),
-                      ),
+                          controller: userInputController,
+                          style: Theme.of(context).textTheme.labelSmall,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return WeinFluErrors.userError;
+                            }
+                            if (value.length >= 10) {
+                              return WeinFluErrors.userErrorLen;
+                            }
+                            return null;
+                          },
+                          onTap: () {
+                            setState(() {
+                              userContainerDecoration =
+                                  activeContainerInputDecoration;
+                              pswContainerDecoration =
+                                  defaultContainerInputDecoration;
+                            });
+                          },
+                          onTapOutside: (event) {
+                            setState(() {
+                              userContainerDecoration =
+                                  defaultContainerInputDecoration;
+                            });
+                          },
+                          onSaved: (userNameValue) {
+                            userName = userNameValue!;
+                          },
+                          decoration: InputDecoration(
+                              border: defaultInputBorder,
+                              label: Text(WeinfluCopys.userInputLabel,
+                                  style: defaultInputLabelTheme))),
                     ),
                     Container(
                       height: 70,
-                      margin: EdgeInsets.fromLTRB(8, 0, 8, 24),
-                      padding: EdgeInsets.only(left: 16, bottom: 5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          border: borderBoxPass,
-                          color: WeinFluColors.brandSecondaryColor),
+                      padding: const EdgeInsets.only(left: 24, bottom: 4),
+                      margin: const EdgeInsets.symmetric(vertical: 24),
+                      decoration: pswContainerDecoration,
                       child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese un valor';
-                          }
-                          return null;
-                        },
-                        onTap: () {
-                          setState(() {
-                            borderBoxPass = borderActive;
-                            borderBoxUser = borderInactive;
-                          });
-                        },
-                        onTapOutside: (event) {
-                          setState(() {
-                            borderBoxPass = borderInactive;
-                          });
-                        },
-                        obscureText: true,
-                        textAlign: TextAlign.start,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            labelText: 'Password',
-                            labelStyle: TextStyle(
-                              color: WeinFluColors.brandLigthDarkColor,
-                            )),
-                      ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return WeinFluErrors.userPsw;
+                            }
+                            return null;
+                          },
+                          onTap: () {
+                            setState(() {
+                              pswContainerDecoration =
+                                  activeContainerInputDecoration;
+                              userContainerDecoration =
+                                  defaultContainerInputDecoration;
+                            });
+                          },
+                          onTapOutside: (event) {
+                            setState(() {
+                              pswContainerDecoration =
+                                  defaultContainerInputDecoration;
+                            });
+                          },
+                          obscureText: true,
+                          obscuringCharacter: '*',
+                          decoration: InputDecoration(
+                              border: defaultInputBorder,
+                              label: const Text(WeinfluCopys.userPswInputLabel),
+                              labelStyle: defaultInputLabelTheme)),
                     ),
                     Row(
                       children: [
                         Checkbox(
-                          value: isChecked,
-                          onChanged: (currentValue) {
-                            print(currentValue);
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4))),
+                          value: checkBoxState,
+                          onChanged: (value) {
                             setState(() {
-                              isChecked = currentValue!;
+                              checkBoxState = !checkBoxState;
                             });
                           },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4)),
-                          checkColor: Colors.white,
+                          checkColor: WeinFluColors.brandLightColor,
                           activeColor: WeinFluColors.brandPrimaryColor,
                         ),
-                        Expanded(child: Text('Remember me')),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: TextButton(
-                            child: Text(
-                              'Recovery Password',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: WeinFluColors.brandLigthDarkColor,
-                                  fontWeight: FontWeight.w200),
-                            ),
-                            onPressed: () {},
+                        const Expanded(child: Text(WeinfluCopys.rememberMe)),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            WeinfluCopys.recoveryPassword,
+                            style: defaultInputLabelTheme,
                           ),
                         )
                       ],
                     ),
-                    Row(children: <Widget>[
-                      Expanded(
-                        child: new Container(
-                            margin:
-                                const EdgeInsets.only(left: 16.0, right: 14.0),
-                            child: Divider(
-                              color: WeinFluColors.brandPrimaryColor,
-                            )),
-                      ),
-                      Text("Or continue with"),
-                      Expanded(
-                        child: new Container(
-                            margin:
-                                const EdgeInsets.only(left: 14.0, right: 16.0),
-                            child: Divider(
-                              color: WeinFluColors.brandPrimaryColor,
-                            )),
-                      ),
-                    ]),
-                    Padding(
-                      padding: EdgeInsets.only(top: 46),
-                      child: Row(children: []),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size(364, 64),
-                          backgroundColor: WeinFluColors.brandPrimaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12))),
-                      child: const Text(
-                        'Log In',
-                        style: TextStyle(fontSize: 20),
+                    Container(
+                      margin: const EdgeInsets.only(top: 32, bottom: 48),
+                      width: 394,
+                      height: 64,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formLoginKey.currentState!.validate()) {
+                            print('Todos lo campos estan ok 🤯');
+                            // _formLoginKey.currentState!.save();
+                            userName = userInputController.text;
+                            Navigator.of(context).pushReplacementNamed(
+                                AppRoutes.home,
+                                arguments: userName);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: WeinFluColors.brandPrimaryColor,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(WeinFluRadius.small))),
+                        child: const Text(WeinfluCopys.logIn),
                       ),
                     ),
+                    Row(
+                      children: const [
+                        Expanded(
+                            child: Divider(
+                          color: WeinFluColors.brandLightColorBorder,
+                          thickness: 1.0,
+                        )),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                          child: Text(WeinfluCopys.orContinue),
+                        ),
+                        Expanded(
+                            child: Divider(
+                          color: WeinFluColors.brandLightColorBorder,
+                          thickness: 1.0,
+                        )),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 42,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 189,
+                          height: 69,
+                          decoration: const BoxDecoration(
+                              color: WeinFluColors.brandSecondaryColor,
+                              borderRadius:
+                                  BorderRadius.all(WeinFluRadius.small)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Image(
+                                image: AssetImage('assets/images/google.png'),
+                                width: 30,
+                              ),
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                WeinfluCopys.google,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: WeinFluColors.brandLigthDarkColor),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 189,
+                          height: 69,
+                          decoration: const BoxDecoration(
+                              color: WeinFluColors.brandSecondaryColor,
+                              borderRadius:
+                                  BorderRadius.all(WeinFluRadius.small)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Image(
+                                image: AssetImage('assets/images/facebook.png'),
+                                width: 30,
+                              ),
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                WeinfluCopys.facebook,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: WeinFluColors.brandLigthDarkColor),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 80,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(WeinfluCopys.notAMember),
+                        TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              WeinfluCopys.registerNow,
+                              style: TextStyle(
+                                  color: WeinFluColors.brandPrimaryColor,
+                                  fontSize: 13),
+                            ))
+                      ],
+                    )
                   ],
                 ))
           ]),

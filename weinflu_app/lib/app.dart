@@ -23,14 +23,15 @@ class WeinFluApp extends StatelessWidget {
         switch (settings.name) {
           case AppRoutes.newPage:
             return MaterialPageRoute(builder: (context) => const NewPage());
-          case AppRoutes.login:
-            return MaterialPageRoute(builder: (context) => const LoginPage());
+          case AppRoutes.home:
+            return MaterialPageRoute(builder: (context) =>  HomePage(storeName: settings.arguments as String,));
           case AppRoutes.otherPage:
             return MaterialPageRoute(
                 builder: (context) =>
                     OtherPage(userData: settings.arguments as User));
+
           default:
-            return MaterialPageRoute(builder: (context) => const LoginPage());
+            return MaterialPageRoute(builder: (context) => const LogInPage());
         }
       },
     );
