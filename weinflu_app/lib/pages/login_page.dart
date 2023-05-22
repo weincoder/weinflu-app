@@ -3,6 +3,7 @@ import 'package:weinflu_app/config/app_routes.dart';
 import 'package:weinflu_app/design/colors.dart';
 import 'package:weinflu_app/design/copys.dart';
 import 'package:weinflu_app/design/radius.dart';
+import 'package:weinflu_app/widgets/divider_with_text.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
@@ -40,6 +41,7 @@ class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: WeinFluColors.brandLightBackgroundColor,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 100, 16, 0),
@@ -179,24 +181,7 @@ class _LogInPageState extends State<LogInPage> {
                         child: const Text(WeinfluCopys.logIn),
                       ),
                     ),
-                    Row(
-                      children: const [
-                        Expanded(
-                            child: Divider(
-                          color: WeinFluColors.brandLightColorBorder,
-                          thickness: 1.0,
-                        )),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                          child: Text(WeinfluCopys.orContinue),
-                        ),
-                        Expanded(
-                            child: Divider(
-                          color: WeinFluColors.brandLightColorBorder,
-                          thickness: 1.0,
-                        )),
-                      ],
-                    ),
+                    const DividerWithText(title: WeinfluCopys.orContinue),
                     const SizedBox(
                       height: 42,
                     ),
