@@ -1,8 +1,5 @@
-
 class User {
-  final String name;
-  final int age;
+  String name;
 
-  User({required this.name, required this.age});
-
+  User({required this.name});
 }

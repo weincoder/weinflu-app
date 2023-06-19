@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weinflu_app/config/app_routes.dart';
+import 'package:weinflu_app/config/providers/user_provider.dart';
 import 'package:weinflu_app/design/colors.dart';
 import 'package:weinflu_app/design/radius.dart';
 import 'package:weinflu_app/widgets/custom_money_display.dart';
@@ -10,8 +11,7 @@ import '../widgets/product_detail.dart';
 import '../widgets/summary_card.dart';
 
 class HomePage extends StatefulWidget {
-  final String storeName;
-  const HomePage({super.key, required this.storeName});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         title: Padding(
             padding: const EdgeInsets.fromLTRB(16, 45, 16, 12),
             child: HomeAppBarTitle(
-              storeName: widget.storeName,
+              storeName:UserProvider.of(context).userData.name,
             )),
       ),
       body: Column(

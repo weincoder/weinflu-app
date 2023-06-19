@@ -8,7 +8,7 @@ class NewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = User(name: 'Weincoders', age: 24);
+    final userData = User(name: 'Weincoders');
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Page'),
