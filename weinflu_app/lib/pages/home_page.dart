@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:weinflu_app/config/app_routes.dart';
+import 'package:weinflu_app/config/providers/user_provider.dart';
 import 'package:weinflu_app/design/colors.dart';
 import 'package:weinflu_app/design/radius.dart';
 import 'package:weinflu_app/widgets/custom_money_display.dart';
+import 'package:weinflu_app/widgets/transaction_detail.dart';
 
 import '../widgets/home_app_bar_title.dart';
 import '../widgets/product_detail.dart';
 import '../widgets/summary_card.dart';
 
 class HomePage extends StatefulWidget {
-  final String storeName;
-  const HomePage({super.key, required this.storeName});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -31,14 +33,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     categorieBtnStyle = buttonStyleActive;
     recentTransactionsBtnStyle = buttonStyleInactive;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: WeinFluColors.brandLightBackgroundColor,
       appBar: AppBar(
         toolbarHeight: 97,
         shape: const RoundedRectangleBorder(
@@ -46,9 +49,11 @@ class _HomePageState extends State<HomePage> {
                 bottomLeft: WeinFluRadius.small,
                 bottomRight: WeinFluRadius.small)),
         backgroundColor: WeinFluColors.brandLightColor,
-        title:  Padding(
-            padding: const  EdgeInsets.fromLTRB(16, 45, 16, 12),
-            child: HomeAppBarTitle(storeName: widget.storeName,)),
+        title: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 45, 16, 12),
+            child: HomeAppBarTitle(
+              storeName:UserProvider.of(context).userData.name,
+            )),
       ),
       body: Column(
         children: [
@@ -180,15 +185,6 @@ class MidHomePageBody extends StatelessWidget {
   }
 }
 
-class BottomHomePageBody extends StatelessWidget {
-  const BottomHomePageBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(height: 88, child: const Placeholder());
-  }
-}
-
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget({super.key});
 
@@ -202,6 +198,7 @@ class CategoriesWidget extends StatelessWidget {
             'View All',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: 13,
                 color: Color.fromRGBO(53, 97, 254, 1)),
           ),
           onPressed: () {
@@ -242,10 +239,66 @@ class RecentTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Este es el reto',
-        style: Theme.of(context).textTheme.headlineLarge,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ListView(
+        children: [
+          TextButton(
+            style: const ButtonStyle(alignment: Alignment.centerRight),
+            child: const Text(
+              'View All',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  color: Color.fromRGBO(53, 97, 254, 1)),
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.allTransactions);
+            },
+          ),
+          TransactionDetailByDay(
+            day: 'TUE',
+            isToday: true,
+            dayNumber: 4,
+            listofTransactions: [
+              TransactionDetail(
+                  movementName: 'Movement Name',
+                  transactionDate: 'Monday 3th,  September 2023',
+                  typeTransaction: TypeTransaction.negative,
+                  amount: 420.16),
+              TransactionDetail(
+                  movementName: 'Movement Name',
+                  transactionDate: 'Monday 3th,  September 2023',
+                  typeTransaction: TypeTransaction.positive,
+                  amount: 433.35)
+            ],
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          TransactionDetailByDay(
+            day: 'MON',
+            isToday: false,
+            dayNumber: 3,
+            listofTransactions: [
+              TransactionDetail(
+                  movementName: 'Movement Name',
+                  transactionDate: 'Monday 3th,  September 2023',
+                  typeTransaction: TypeTransaction.positive,
+                  amount: 720.92),
+              TransactionDetail(
+                  movementName: 'Movement Name',
+                  transactionDate: 'Monday 3th,  September 2023',
+                  typeTransaction: TypeTransaction.negative,
+                  amount: 84.45),
+              TransactionDetail(
+                  movementName: 'Movement Name',
+                  transactionDate: 'Monday 3th,  September 2023',
+                  typeTransaction: TypeTransaction.positive,
+                  amount: 137.26)
+            ],
+          )
+        ],
       ),
     );
   }

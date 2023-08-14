@@ -13,6 +13,7 @@ class WeinfluCopys {
   static const String logIn = 'Log In';
   static const String notAMember = 'Not a member?';
   static const String registerNow = 'Register Now';
+  static const String recenTrx = 'Recent transactions';
 }
 
 class WeinFluErrors{

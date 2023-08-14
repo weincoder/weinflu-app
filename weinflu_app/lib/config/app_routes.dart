@@ -4,4 +4,5 @@ class AppRoutes {
   static const String newPage = 'new-page';
   static const String otherPage = 'other-page';
   static const String login = '/';
+  static const String allTransactions = 'transactions';
 }
