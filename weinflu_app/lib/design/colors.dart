@@ -25,3 +25,4 @@ class WeinFluColors {
   static const Color brandOnSuccessColor = Color.fromRGBO(35, 159, 87, 1);
 }
 
+

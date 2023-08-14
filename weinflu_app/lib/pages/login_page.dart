@@ -4,6 +4,7 @@ import 'package:weinflu_app/config/providers/user_provider.dart';
 import 'package:weinflu_app/design/colors.dart';
 import 'package:weinflu_app/design/copys.dart';
 import 'package:weinflu_app/design/radius.dart';
+import 'package:weinflu_app/pages/helper/validate_input.dart';
 import 'package:weinflu_app/widgets/divider_with_text.dart';
 
 class LogInPage extends StatefulWidget {
@@ -78,17 +79,10 @@ class _LogInPageState extends State<LogInPage> {
                         padding: const EdgeInsets.only(left: 24, bottom: 4),
                         decoration: userContainerDecoration,
                         child: TextFormField(
+                          key: const Key('input-name'),
                             controller: userInputController,
                             style: Theme.of(context).textTheme.labelSmall,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return WeinFluErrors.userError;
-                              }
-                              if (value.length >= 10) {
-                                return WeinFluErrors.userErrorLen;
-                              }
-                              return null;
-                            },
+                            validator: (value) => validateInput(value),
                             onTap: () {
                               setState(() {
                                 userContainerDecoration =
@@ -117,6 +111,7 @@ class _LogInPageState extends State<LogInPage> {
                         margin: const EdgeInsets.symmetric(vertical: 24),
                         decoration: pswContainerDecoration,
                         child: TextFormField(
+                          key: const Key('input-psw'),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return WeinFluErrors.userPsw;
